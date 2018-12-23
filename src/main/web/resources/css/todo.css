@@ -1,0 +1,91 @@
+@import "./common.css";
+@charset "UTF-8";
+
+#formDiv {
+    margin: 20px;
+    background-color: #ECECEC;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#formDiv input[type='text'] {
+    width: calc(100% - 56px);
+    padding: 5px 10px;
+
+}
+
+#formDiv .btnCancel {
+    padding: 7px 14px;
+    vertical-align: baseline;
+}
+#listDiv {
+    margin: 0 20px;
+    text-align: center;
+}
+#listPage {
+}
+
+#listPage li {
+    padding : 5px 10px;
+    width: 100%;
+    background-color: #EFEFEF;
+    margin-bottom: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-align: left;
+}
+
+#listPage li label {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    width: calc(100% - 86px);
+    color: #999999;
+    font-weight: normal;
+}
+
+#listPage li label b {
+    color: #000000;
+    font-weight: bold;
+}
+
+#listPage li input[type='checkbox'] {
+    vertical-align: top;
+}
+
+#listPage li label strong {
+    color: #337ab7;
+    text-decoration: underline;
+}
+
+#listPage li label.checking {
+    text-decoration: line-through;
+}
+
+#listDiv #pagination-1 {
+    margin: 0 auto;
+}
+
+#listPage li em {
+    font-size: 0.5em;
+    color: #999999;
+    display: block;
+    padding-left: 20px;
+}
+
+#listPage li span {
+    float: right;
+}
+#listPage li span button {
+    padding: 2px;
+}
+
+#searchArea {
+    margin: 10px 20px 0 20px;
+}
+#searchArea .datepicker {
+    width: 100px;
+    text-align: center;
+}

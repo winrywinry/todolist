@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.winry.todolist.todoMapper">
+    <select id="select_todoList">
+        select 1
+    </select>
+
+    <insert id="regist" parameterType="todoVO" useGeneratedKeys="true" keyProperty="todo_no" keyColumn="todo_no">
+        <![CDATA[
+        insert into t_todo (
+               content
+        ) values (
+               #{content}
+        )
+        ]]>
+        <selectKey keyProperty="todo_no" resultType="int" order="AFTER">
+            <![CDATA[
+		   select CURRVAL('t_todo_todo_no_seq')
+		  ]]>
+        </selectKey>
+    </insert>
+
+    <select id="select_one" parameterType="int" resultType="todoVO">
+        <![CDATA[
+        select a.todo_no
+             , a.content
+             , a.input_dt
+          from t_todo a
+         where a.todo_no = #{todo_no}
+        ]]>
+    </select>
+
+    <select id="select_all" resultType="todoVO">
+        <![CDATA[
+        select a.todo_no
+             , a.content
+             , a.input_dt
+             , a.complete_dt
+             , a.cnt
+          from (
+                select a.todo_no
+                     , a.todo_no refer_no
+                     , c.cnt
+                     , a.content
+                     , a.input_dt
+                     , a.complete_dt
+                  from t_todo a
+                       left outer join (
+                            select todo_no
+                            from t_todo_refer
+                            group by todo_no
+                        ) b on (a.todo_no = b.todo_no)
+                       left outer join (
+                            select a.refer_no
+                                 , count(*) cnt
+                                 , max(a.todo_no) todo_no
+                              from t_todo_refer a
+                                   left outer join t_todo b on (a.todo_no = b.todo_no)
+                             where complete_dt is null
+                             group by a.refer_no
+                        ) c on (a.todo_no = c.refer_no)
+                 where b.todo_no is null
+                union all
+                select a.todo_no
+                     , a.refer_no
+                     , 0 cnt
+                     , b.content
+                     , b.input_dt
+                     , b.complete_dt
+                  from t_todo_refer a
+                       left outer join t_todo b on (a.todo_no = b.todo_no)
+
+                 ) a
+         where 1=1
+         ]]>
+        <if test="input_dt != null">
+            <![CDATA[
+            and to_char(a.input_dt, 'yyyy-MM-dd') = #{input_dt}
+            ]]>
+        </if>
+        <if test="update_dt != null">
+            <![CDATA[
+            and to_char(a.update_dt, 'yyyy-MM-dd') = #{update_dt}
+            ]]>
+        </if>
+        <if test="content != null and content != ''">
+            <![CDATA[
+            and a.content like '%${content}%'
+            ]]>
+        </if>
+         <![CDATA[
+         order by a.refer_no desc, a.cnt desc, a.todo_no desc
+         ]]>
+    </select>
+
+    <delete id="delete_refer" parameterType="int">
+        <![CDATA[
+        delete from t_todo_refer
+         where todo_no = #{todo_no}
+        ]]>
+    </delete>
+
+    <insert id="insert_refer" parameterType="hashmap">
+        <![CDATA[
+        insert into t_todo_refer (
+               todo_no
+             , refer_no
+        ) values (
+               #{todo_no}
+             , #{refer_no}
+        )
+        ]]>
+    </insert>
+
+    <delete id="delete_todo" parameterType="int">
+        <![CDATA[
+        delete from t_todo
+         where todo_no = #{todo_no}
+        ]]>
+    </delete>
+
+    <update id="update_complete" parameterType="int">
+        <![CDATA[
+        update t_todo set
+               complete_dt = now()
+         where todo_no = #{todo_no}
+        ]]>
+    </update>
+
+    <update id="update_rollback" parameterType="int">
+        <![CDATA[
+        update t_todo set
+               complete_dt = null
+         where todo_no = #{todo_no}
+        ]]>
+    </update>
+
+    <update id="update_todo" parameterType="todoVO">
+        <![CDATA[
+        update t_todo set
+               content = #{content}
+             , update_dt = now()
+         where todo_no = #{todo_no}
+        ]]>
+    </update>
+</mapper>

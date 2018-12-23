@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* Common */
+@font-face {
+    font-family:ngwoff;
+    src:url('/resources/font/NanumGothic.woff')
+}
+@font-face {
+    font-family:ngeot;
+    src:url('/resources/font/NanumGothic.eot');
+}
+@font-face {
+    font-family:NanumGothic;
+    src:url('/resources/font/NanumGothic.ttf');
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin:0; padding:0 }
+body, input, textarea, select, button, table { font-family:'나눔고딕', NanumGothic, Helvetica, AppleGothic, Sans-serif, ngwoff, ngeot, '굴림', gulrem; }
+html, body { height: 100%; padding:0; margin:0; }
+img, fieldset { border:0 }
+ul, ol { list-style:none }
+em, address { font-style:normal }
+a { text-decoration:none }
+a:hover, a:active, a:focus { text-decoration:underline }
+form, fieldset, legend {margin:0; padding:0; }
+legend {display: none;}
+
+html, body, div{
+    margin: 0;
+    padding: 0;
+}
+
+div#wrap {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+header {
+    width: 100%;
+    height: 80px;
+    background-color: yellow;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    font-family: "Arial Black";
+    font-weight: bold;
+    font-size: 3em;
+    padding: 15px 20px;
+}
+
+section {
+    margin: 0 auto;
+    width: 100%;
+}
